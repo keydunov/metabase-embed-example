@@ -5,6 +5,7 @@ app = Flask(__name__)
 
 import jwt
 import time
+import json
 
 METABASE_SITE_URL = "https://partner-cube.metabaseapp.com"
 METABASE_SECRET_KEY = "abae64173082e1daac3d0eddf13de9c269d3d829deb9e32503309e75d0c92ea8"
@@ -15,9 +16,11 @@ METABASE_SECRET_KEY = "abae64173082e1daac3d0eddf13de9c269d3d829deb9e32503309e75d
 @app.route('/')
 @app.route('/index.html')
 def index():
+    __user = { "table": "ORDERS4" }
     payload = {
         "resource": {"dashboard": 1},
         "params": {
+            "__user": json.dumps(__user)
         },
         "exp": round(time.time()) + (60 * 10) # 10 minute expiration
     }
